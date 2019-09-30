@@ -69,16 +69,16 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             if ( sender.hasPermission(subCommand.getPermission())){
                 sender.sendMessage(messages.HELP_COMMAND_HEADER);
                 Iterator newIter = this.subCommands.iterator();
+
                 do {
                     if (!newIter.hasNext()) {
                         sender.sendMessage(messages.HELP_COMMAND_FOOTER);
                         return true;
                     }
 
-                    ICommand cmd = (ICommand)iter.next();
+                    ICommand cmd = (ICommand)newIter.next();
                     if (sender.hasPermission(subCommand.getPermission())){
-                        sender.sendMessage(messages.HELP_COMMAND_LINE + cmd.getUsage());
-                        sender.sendMessage(messages.HELP_COMMAND_LINE + cmd.getDescription());
+                        sender.sendMessage(messages.HELP_COMMAND_LINE + cmd.getUsage() + " : " + cmd.getDescription());
                     }
                 } while (true);
             }

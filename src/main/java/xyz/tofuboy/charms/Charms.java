@@ -13,9 +13,6 @@ public class Charms extends JavaPlugin {
     private CharmProperties charmProperties;
     private CharmManager charmManager;
 
-    public Charms(){
-    }
-
     @Override
     public void onEnable() {
         initConfigs();
@@ -46,8 +43,9 @@ public class Charms extends JavaPlugin {
     }
 
     private void registerCommands () {
-        this.getCommand("charms").setExecutor(new CommandHandler(this));
-        this.getCommand("charms").setTabCompleter(new CommandHandler(this));
+        CommandHandler commandHandler = new CommandHandler(this);
+        this.getCommand("charms").setExecutor(commandHandler);
+        this.getCommand("charms").setTabCompleter(commandHandler);
     }
 
     public Properties getProperties() {

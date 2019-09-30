@@ -28,10 +28,10 @@ public class Messages extends DataFile {
             this.ERROR = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("Error"));
             this.GIVE = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("Give"));
             this.NO_PERMISSION = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("NoPerm"));
-            this.COMMAND_USAGE = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("CommandUsage"));
-            this.HELP_COMMAND_HEADER = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes( '&', "&b=====COMMAND=====");
-            this.HELP_COMMAND_LINE = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes( '&', "&b-> ");
-            this.HELP_COMMAND_FOOTER = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes( '&', "&b=================");
+            this.COMMAND_USAGE = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("CommandUsage"));
+            this.HELP_COMMAND_HEADER = ChatColor.translateAlternateColorCodes( '&', "&bCharms Commands:");
+            this.HELP_COMMAND_LINE = ChatColor.translateAlternateColorCodes( '&', "&b-> ");
+            this.HELP_COMMAND_FOOTER = ChatColor.translateAlternateColorCodes( '&', "&b================================");
         }
         catch (NullPointerException e){
             plugin.getLogger().info(ChatColor.translateAlternateColorCodes('&', "&4Missing information in messages.yml"));

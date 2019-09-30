@@ -1,3 +1,6 @@
 name: Charms
 version: 1.0
 main: xyz.tofuboy.charms.Charms
+commands:
+  charms:
+    description: Charms plugin command

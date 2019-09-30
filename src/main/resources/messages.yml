@@ -1,4 +1,4 @@
-PluginsPrefix: "[Charms]"
+PluginsPrefix: "&e[Charms]&r"
 Error: "&4ERROR"
 Give: "&3Giving"
 NoPerm: "&4You do not have permission to perform this action"

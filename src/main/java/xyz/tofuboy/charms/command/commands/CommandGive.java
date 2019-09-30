@@ -15,7 +15,7 @@ public final class CommandGive implements ICommand {
     private final int minArgs = 2;
     private final int maxArgs = 3;
     private final String label = "give";
-    private final String perm = "give";
+    private final String perm = "charms.give";
     private final String desc = "Gives player a charm";
     private final String use = "/charms give <player> <charm> <amount>";
     private final boolean isConsole = true;
