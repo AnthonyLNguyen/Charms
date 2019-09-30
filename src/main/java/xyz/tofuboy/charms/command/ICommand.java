@@ -21,4 +21,10 @@ public interface ICommand {
     String getPermission();
 
     int getMaxArgs();
+
+    boolean isBoth();
+
+    boolean isConsole();
+
+    boolean isPlayer();
 }

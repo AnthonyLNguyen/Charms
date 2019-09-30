@@ -12,13 +12,14 @@ import java.util.List;
 
 public final class CommandGive implements ICommand {
 
-    private int minArgs = 2;
-    private int maxArgs = 3;
-    private String label = "give";
-    private String perm = "give";
-    private String desc = "Gives player a charm";
-    private String use = "/charms give <player> <charm> <amount>";
-
+    private final int minArgs = 2;
+    private final int maxArgs = 3;
+    private final String label = "give";
+    private final String perm = "give";
+    private final String desc = "Gives player a charm";
+    private final String use = "/charms give <player> <charm> <amount>";
+    private final boolean isConsole = true;
+    private final boolean isPlayer = true;
 
     public String getDescription() {
         return desc;
@@ -88,5 +89,17 @@ public final class CommandGive implements ICommand {
 
     public int getMaxArgs() {
         return maxArgs;
+    }
+
+    public boolean isBoth() {
+        return isConsole && isPlayer;
+    }
+
+    public boolean isConsole() {
+        return isConsole;
+    }
+
+    public boolean isPlayer() {
+        return isPlayer;
     }
 }

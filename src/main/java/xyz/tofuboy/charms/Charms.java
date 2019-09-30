@@ -47,6 +47,7 @@ public class Charms extends JavaPlugin {
 
     private void registerCommands () {
         this.getCommand("charms").setExecutor(new CommandHandler(this));
+        this.getCommand("charms").setTabCompleter(new CommandHandler(this));
     }
 
     public Properties getProperties() {

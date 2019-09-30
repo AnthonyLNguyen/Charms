@@ -5,8 +5,8 @@ import xyz.tofuboy.charms.Charms;
 
 public class Properties extends DataFile {
 
-    public Properties(String fileName, Charms charms) {
-        super(fileName, charms);
+    public Properties(String fileName, Charms plugin) {
+        super(fileName, plugin);
         this.loadProperties();
     }
     public void loadProperties() {
