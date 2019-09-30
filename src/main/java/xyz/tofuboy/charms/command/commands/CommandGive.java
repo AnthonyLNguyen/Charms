@@ -49,14 +49,14 @@ public final class CommandGive implements ICommand {
         return minArgs;
     }
 
-    public void perform(Charms charms, CommandSender sender, String[] args) {
+    public void perform(Charms plugin, CommandSender sender, String[] args) {
         Player player = Bukkit.getPlayer(args[1]);
         if (player == null) {
-            sender.sendMessage(charms.getMessages().ERROR + args[1] + " is not online!");
+            sender.sendMessage(plugin.getMessages().ERROR + args[1] + " is not online!");
         } else {
-            CharmProperties charmProperties = charms.getCharmManager().getCharmProperties(args[2]);
+            CharmProperties charmProperties = plugin.getCharmManager().getCharmProperties(args[2]);
             if (charmProperties == null){
-                sender.sendMessage(charms.getMessages().ERROR + args[2] + " is not a valid charm!");
+                sender.sendMessage(plugin.getMessages().ERROR + args[2] + " is not a valid charm!");
             } else {
                 boolean test;
 
@@ -64,17 +64,17 @@ public final class CommandGive implements ICommand {
                 try {
                     amount = Integer.valueOf(args[3]);
                     if (amount <= 0) {
-                        sender.sendMessage(charms.getMessages().ERROR + "amount must not be negative.");
+                        sender.sendMessage(plugin.getMessages().ERROR + "amount must not be negative.");
                         return;
                     }
                 } catch (NumberFormatException e){
-                    sender.sendMessage(charms.getMessages().ERROR + args[3] + " is not a number.");
+                    sender.sendMessage(plugin.getMessages().ERROR + args[3] + " is not a number.");
                     return;
                 }
-                ItemStack item = charmProperties.getItemStack();
+                ItemStack item = charmProperties.getItemStack(args[2].toUpperCase());
                 item.setAmount(amount);
                 player.getInventory().addItem(item);
-                sender.sendMessage(charms.getMessages().GIVE + " " + args[2] + " given to " + player.getName());
+                sender.sendMessage(plugin.getMessages().GIVE + " " + args[2] + " given to " + player.getName());
             }
         }
     }

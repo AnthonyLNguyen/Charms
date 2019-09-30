@@ -14,7 +14,7 @@ public interface ICommand {
 
     int getMinArgs();
 
-    void perform(Charms charms, CommandSender sender, String[] args);
+    void perform(Charms plugin, CommandSender sender, String[] args);
 
     String getLabel();
 
