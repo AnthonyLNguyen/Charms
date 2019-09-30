@@ -86,6 +86,30 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     }
 
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        if (args.length != 0){
+
+            for (ICommand subCommand : this.subCommands) {
+                if (subCommand.getLabel().equalsIgnoreCase(args[0])) {
+                    if (subCommand.getPermission() != null && sender.hasPermission((subCommand.getPermission()))) {
+                        return new ArrayList<>();
+                    }
+
+                    return subCommand.tabComplete(this.plugin, sender, args);
+                }
+            }
+        }
+        List<String> list = new ArrayList<>();
+        Iterator newIter = this.subCommands.iterator();
+
+        do {
+            if (newIter.hasNext()){
+                return list;
+            }
+
+            ICommand subCommand = (ICommand)newIter.next();
+            if(subCommand.getPermission() != null && sender.hasPermission(subCommand.getPermission())){
+                list.add(subCommand.getLabel());
+            }
+        } while(true);
     }
 }
