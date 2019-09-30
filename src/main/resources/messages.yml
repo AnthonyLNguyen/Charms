@@ -1,0 +1,5 @@
+PluginsPrefix: "[Charms]"
+Error: "&4ERROR"
+Give: "&3Giving"
+NoPerm: "&4You do not have permission to perform this action"
+CommandUsage: "&4Proper command usage: "
