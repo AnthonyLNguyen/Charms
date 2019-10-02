@@ -46,7 +46,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                         sender.sendMessage(messages.NO_PERMISSION);
                         return true;
                     }
-
+                    plugin.console(Charms.LogType.DEBUG, "Args:" + args.length);
                     if (args.length >= subCommand.getMinArgs() && args.length <= subCommand.getMaxArgs()){
                         subCommand.perform(this.plugin, sender, args);
                         return true;

@@ -12,8 +12,8 @@ import java.util.List;
 
 public final class CommandGive implements ICommand {
 
-    private final int minArgs = 2;
-    private final int maxArgs = 3;
+    private final int minArgs = 3;
+    private final int maxArgs = 4;
     private final String label = "give";
     private final String perm = "charms.give";
     private final String desc = "Gives player a charm";
@@ -28,13 +28,13 @@ public final class CommandGive implements ICommand {
     public List<String> tabComplete(Charms plugin, CommandSender sender, String[] args) {
         List<String> list = new ArrayList<>();
         int argsLength = args.length;
-        if (argsLength == 2){
+        if (argsLength == 0){
             return null;
-        } else if ( argsLength == 3 ) {
+        } else if ( argsLength == 1 ) {
             list.add("Player");
-        } else if( argsLength == 4 ) {
+        } else if( argsLength == 2 ) {
             list.add("charm");
-        } else if ( argsLength == 5 ) {
+        } else if ( argsLength == 3 ) {
             list.add("count");
         }
 
@@ -52,14 +52,12 @@ public final class CommandGive implements ICommand {
     public void perform(Charms plugin, CommandSender sender, String[] args) {
         Player player = Bukkit.getPlayer(args[1]);
         if (player == null) {
-            sender.sendMessage(plugin.getMessages().ERROR + args[1] + " is not online!");
+            sender.sendMessage(plugin.getMessages().ERROR + args[1] + " is not online or does not exist.");
         } else {
             CharmProperties charmProperties = plugin.getCharmManager().getCharmProperties(args[2]);
             if (charmProperties == null){
-                sender.sendMessage(plugin.getMessages().ERROR + args[2] + " is not a valid charm!");
+                sender.sendMessage(plugin.getMessages().ERROR + args[2] + " is not a valid charm.");
             } else {
-                boolean test;
-
                 int amount;
                 try {
                     amount = Integer.valueOf(args[3]);
@@ -74,7 +72,7 @@ public final class CommandGive implements ICommand {
                 ItemStack item = charmProperties.getItemStack(args[2].toUpperCase());
                 item.setAmount(amount);
                 player.getInventory().addItem(item);
-                sender.sendMessage(plugin.getMessages().GIVE + " " + args[2] + " given to " + player.getName());
+                sender.sendMessage(plugin.getMessages().GIVE + args[2] + " given to " + player.getName());
             }
         }
     }
