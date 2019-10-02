@@ -7,6 +7,8 @@ public interface ICharm {
 
     String name();
 
+    String headID();
+
     String getDescription();
 
     String getHeadID();

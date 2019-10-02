@@ -18,11 +18,13 @@ public class Farming implements ICharm {
     }
 
     public String name() {
-        return plugin.getCharmProperties().getName().get(this.getClass());
+        return "Farmer";
     }
 
+    public String headID() { return plugin.getCharmProperties().getHeadID(name()); }
+
     public String getDescription() {
-        return plugin.getCharmProperties().getDescription(this.getClass());
+        return plugin.getCharmProperties().getDescription(name());
     }
 
     public String getHeadID() {
@@ -34,7 +36,7 @@ public class Farming implements ICharm {
         List<Block> blocks = bd.getBlocksFromLocation(location, radius);
         for (Block b:
              blocks) {
-            if (b instanceof Ageable && plugin.getCharmProperties().affectedBlock(this.getClass(), ((Ageable) b).getMaterial())){
+            if (b instanceof Ageable && plugin.getCharmProperties().isAffectedBlock(name(), ((Ageable) b).getMaterial())){
                 Ageable a = (Ageable)b;
                 if (a.getAge() < a.getMaximumAge())
                     a.setAge(a.getAge());
