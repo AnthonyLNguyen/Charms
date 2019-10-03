@@ -46,7 +46,6 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                         sender.sendMessage(messages.NO_PERMISSION);
                         return true;
                     }
-                    plugin.console(Charms.LogType.DEBUG, "Args:" + args.length);
                     if (args.length >= subCommand.getMinArgs() && args.length <= subCommand.getMaxArgs()){
                         subCommand.perform(this.plugin, sender, args);
                         return true;
@@ -90,7 +89,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
             for (ICommand subCommand : this.subCommands) {
                 if (subCommand.getLabel().equalsIgnoreCase(args[0])) {
-                    if (subCommand.getPermission() != null && sender.hasPermission((subCommand.getPermission()))) {
+                    if (subCommand.getPermission() != null && !sender.hasPermission((subCommand.getPermission()))) {
                         return new ArrayList<>();
                     }
 
@@ -102,7 +101,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         Iterator newIter = this.subCommands.iterator();
 
         do {
-            if (newIter.hasNext()){
+            if (!newIter.hasNext()){
                 return list;
             }
 

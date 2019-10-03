@@ -3,6 +3,7 @@ package xyz.tofuboy.charms.charms.types;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.inventory.ItemStack;
 import xyz.tofuboy.charms.Charms;
 import xyz.tofuboy.charms.charms.ICharm;
 import xyz.tofuboy.charms.utils.BlockDetection;
@@ -18,13 +19,13 @@ public class Farming implements ICharm {
     }
 
     public String name() {
-        return "Farmer";
+        return "Farming";
     }
 
-    public String headID() { return plugin.getCharmProperties().getHeadID(name()); }
+    public ItemStack head() { return plugin.getCharmManager().getHead(name()); }
 
     public String getDescription() {
-        return plugin.getCharmProperties().getDescription(name());
+        return plugin.getCharmManager().getDescription(name());
     }
 
     public String getHeadID() {
@@ -36,7 +37,7 @@ public class Farming implements ICharm {
         List<Block> blocks = bd.getBlocksFromLocation(location, radius);
         for (Block b:
              blocks) {
-            if (b instanceof Ageable && plugin.getCharmProperties().isAffectedBlock(name(), ((Ageable) b).getMaterial())){
+            if (b instanceof Ageable && plugin.getCharmManager().isAffectedBlock(name(), ((Ageable) b).getMaterial())){
                 Ageable a = (Ageable)b;
                 if (a.getAge() < a.getMaximumAge())
                     a.setAge(a.getAge());

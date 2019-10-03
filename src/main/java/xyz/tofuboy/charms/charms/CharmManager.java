@@ -1,36 +1,73 @@
 package xyz.tofuboy.charms.charms;
 
-import org.bukkit.entity.Player;
+import com.sun.jndi.ldap.EntryChangeResponseControl;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import xyz.tofuboy.charms.Charms;
 import xyz.tofuboy.charms.settings.CharmProperties;
+import xyz.tofuboy.charms.utils.CustomPlayerHeads;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class CharmManager {
-    private HashMap<String, Class<? extends Charms>> validCharms = new HashMap<>();
-    private HashMap<String, CharmProperties> charmProperties = new HashMap<>();
+    private CharmProperties prop;
+    private Charms plugin;
 
-    public HashMap<String, Class<? extends Charms>> getValidCharms() {
-        return this.validCharms;
+    public CharmManager(CharmProperties charmProperties, Charms plugin) {
+        this.prop = charmProperties;
+        this.plugin = plugin;
     }
 
-    public CharmProperties getCharmProperties(String var1) {
-        Iterator var2 = this.charmProperties.keySet().iterator();
+    public CharmProperties getCharmProperties() {
+        return prop;
+    }
 
-        String var3;
-        do {
-            if (!var2.hasNext()) {
-                return null;
+    public void createCharm(String charmName){
+        plugin.console(Charms.LogType.DEBUG,"Creating charm " + charmName);
+    }
+
+    public String getCharmFromHead(ItemStack head){
+        for (Map.Entry<String,ItemStack> s : prop.getAllHeads().entrySet()) {
+            if (s.getValue().equals(head)){
+                return s.getKey();
             }
+        }
+        return "";
+    }
 
-            var3 = (String)var2.next();
-        } while(!var3.equalsIgnoreCase(var1));
+    public boolean isValidCharmName(String text){
+        text = text.toLowerCase();
+        return (prop.getAllCharms().containsKey(text));
+    }
 
-        return (CharmProperties) this.charmProperties.get(var3);
+    public ItemStack getHead(String key) {
+        return prop.getAllHeads().get(key.toLowerCase());
+    }
+
+    public String getDescription(String key) {
+        return prop.getAllDescriptions().get(key.toLowerCase());
+    }
+
+    public boolean isAffectedBlock(String key, Material material){
+        return prop.getAllBlocks().get(key.toLowerCase()).contains(material);
+    }
+
+    public boolean isAffectedEntity(String key, EntityType entityType){
+        return prop.getAllEntities().get(key.toLowerCase()).contains(entityType);
+    }
+
+    public boolean isCharm(Block block){
+        if (block.getType().equals(Material.PLAYER_HEAD)) {
+            return prop.getAllHeads().containsValue(block.getDrops().toArray()[0]);
+        } else return false;
+    }
+
+    public ItemStack getItemStack(String key){
+        return prop.getAllHeads().get(key.toLowerCase());
     }
 }

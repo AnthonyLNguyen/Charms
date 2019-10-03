@@ -5,20 +5,23 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.tofuboy.charms.charms.CharmManager;
 import xyz.tofuboy.charms.command.CommandHandler;
+import xyz.tofuboy.charms.listeners.BlockPlaceListener;
 import xyz.tofuboy.charms.settings.CharmProperties;
 import xyz.tofuboy.charms.settings.Config;
 import xyz.tofuboy.charms.settings.Messages;
+import xyz.tofuboy.charms.utils.CustomPlayerHeads;
 
 public class Charms extends JavaPlugin {
     private Config config;
     private Messages messages;
-    private CharmProperties charmProperties;
     private CharmManager charmManager;
+    private CustomPlayerHeads customPlayerHeads;
 
     @Override
     public void onEnable() {
         initConfigs();
-        this.charmManager = new CharmManager();
+        this.customPlayerHeads = new CustomPlayerHeads();
+        Bukkit.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this),this);
         registerCommands();
         getLogger().info("onEnable is called!");
     }
@@ -37,13 +40,13 @@ public class Charms extends JavaPlugin {
     private void initConfigs(){
         this.config = new Config("config.yml", this);
         this.messages = new Messages("messages.yml", this);
-        this.charmProperties = new CharmProperties("charms.yml", this);
+        this.charmManager = new CharmManager(new CharmProperties("charms.yml", this), this);
     }
 
     private void nullConfigs(){
         this.config = null;
         this.messages = null;
-        this.charmProperties = null;
+        this.charmManager = null;
     }
 
     private void registerCommands () {
@@ -64,8 +67,8 @@ public class Charms extends JavaPlugin {
         return charmManager;
     }
 
-    public CharmProperties getCharmProperties() {
-        return charmProperties;
+    public CustomPlayerHeads getCustomPlayerHeads() {
+        return customPlayerHeads;
     }
 
     public enum LogType

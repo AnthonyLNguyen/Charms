@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import xyz.tofuboy.charms.Charms;
 import xyz.tofuboy.charms.command.ICommand;
-import xyz.tofuboy.charms.settings.CharmProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +27,14 @@ public final class CommandGive implements ICommand {
     public List<String> tabComplete(Charms plugin, CommandSender sender, String[] args) {
         List<String> list = new ArrayList<>();
         int argsLength = args.length;
-        if (argsLength == 0){
+        if (argsLength == 1){
             return null;
-        } else if ( argsLength == 1 ) {
-            list.add("Player");
-        } else if( argsLength == 2 ) {
-            list.add("charm");
-        } else if ( argsLength == 3 ) {
-            list.add("count");
+        } else if ( argsLength == 2 ) {
+            return null;
+        } else if( argsLength == 3 ) {
+            list.addAll(plugin.getCharmManager().getCharmProperties().getAllCharms().keySet());
+        } else if ( argsLength == 4 ) {
+            list.add("");
         }
 
         return list;
@@ -54,24 +53,29 @@ public final class CommandGive implements ICommand {
         if (player == null) {
             sender.sendMessage(plugin.getMessages().ERROR + args[1] + " is not online or does not exist.");
         } else {
-            CharmProperties charmProperties = plugin.getCharmManager().getCharmProperties(args[2]);
-            if (charmProperties == null){
+            if (!plugin.getCharmManager().isValidCharmName(args[2])){
                 sender.sendMessage(plugin.getMessages().ERROR + args[2] + " is not a valid charm.");
             } else {
                 int amount;
                 try {
-                    amount = Integer.valueOf(args[3]);
-                    if (amount <= 0) {
-                        sender.sendMessage(plugin.getMessages().ERROR + "amount must not be negative.");
-                        return;
+                    if (args.length == 3)
+                        amount = 1;
+                    else {
+                        amount = Integer.parseInt(args[3]);
+                        if (amount <= 0) {
+                            sender.sendMessage(plugin.getMessages().ERROR + "amount must not be negative.");
+                            return;
+                        }
                     }
                 } catch (NumberFormatException e){
                     sender.sendMessage(plugin.getMessages().ERROR + args[3] + " is not a number.");
                     return;
                 }
-                ItemStack item = charmProperties.getItemStack(args[2].toUpperCase());
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                            ItemStack item = plugin.getCharmManager().getItemStack(args[2]);
                 item.setAmount(amount);
                 player.getInventory().addItem(item);
+                });
                 sender.sendMessage(plugin.getMessages().GIVE + args[2] + " given to " + player.getName());
             }
         }

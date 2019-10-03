@@ -1,8 +1,7 @@
 Charms:
-  FARMER:
-    item: PLAYER_HEAD
-    name: "TestName"
-    headBASE64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTIyODRlMTMyYmZkNjU5YmM2YWRhNDk3YzRmYTMwOTRjZDkzMjMxYTZiNTA1YTEyY2U3Y2Q1MTM1YmE4ZmY5MyJ9fX0="
+  farming:
+    name: "farming"
+    head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTBkNDkxMTE4NzlkZmZmMzg0MDdjMDRiMzgzNWUyNGExMWUwMDg3NGRiZjVjZmRkYmNlZTc4MGQzODYyMGMxMiJ9fX0="
     description: "This is a test description."
     blocks:
       - WHEAT

@@ -1,13 +1,14 @@
 package xyz.tofuboy.charms.charms;
 
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 import xyz.tofuboy.charms.Charms;
 
 public interface ICharm {
 
     String name();
 
-    String headID();
+    ItemStack head();
 
     String getDescription();
 
