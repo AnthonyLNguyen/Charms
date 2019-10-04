@@ -3,7 +3,7 @@ package xyz.tofuboy.charms.command;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 import xyz.tofuboy.charms.command.commands.CommandGive;
 import xyz.tofuboy.charms.settings.Messages;
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import java.util.List;
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
 
-    private final Charms plugin;
+    private final CharmsPlugin plugin;
     private final List<ICommand> subCommands;
 
-    public CommandHandler(Charms plugin){
+    public CommandHandler(CharmsPlugin plugin){
         this.plugin = plugin;
         subCommands = new ArrayList<>();
         this.subCommands.add(new CommandGive());

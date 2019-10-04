@@ -1,11 +1,9 @@
 package xyz.tofuboy.charms.settings;
 
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 import xyz.tofuboy.charms.charms.ICharm;
 import xyz.tofuboy.charms.charms.types.Farming;
 import xyz.tofuboy.charms.utils.CustomPlayerHeads;
@@ -13,7 +11,7 @@ import xyz.tofuboy.charms.utils.CustomPlayerHeads;
 import java.util.*;
 
 public class CharmProperties extends DataFile {
-    Charms plugin;
+    CharmsPlugin plugin;
 
     public HashMap<String,Class<? extends ICharm>> charms = new HashMap<>();
     private HashMap<String,ItemStack> headID = new HashMap<>();
@@ -21,14 +19,14 @@ public class CharmProperties extends DataFile {
     private HashMap<String,List<Material>> affectedBlocks = new HashMap<>();
     private HashMap<String,List<EntityType>> affectedEntities = new HashMap<>();
 
-    public CharmProperties(String fileName, Charms plugin) {
+    public CharmProperties(String fileName, CharmsPlugin plugin) {
         super(fileName, plugin);
         this.plugin = plugin;
         this.loadProperties();
     }
 
     private void loadProperties() {
-        String mainPath = "Charms.";
+        String mainPath = "CharmsPlugin.";
         String path;
 
 

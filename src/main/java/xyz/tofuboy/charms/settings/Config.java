@@ -4,10 +4,9 @@ package xyz.tofuboy.charms.settings;
  * Created by antho on 9/30/2019.
  */
 
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 
 import org.bukkit.ChatColor;
-import xyz.tofuboy.charms.Charms;
 
 public class Config extends DataFile {
 
@@ -19,7 +18,7 @@ public class Config extends DataFile {
             ;
 
 
-    public Config(String fileName, Charms plugin) {
+    public Config(String fileName, CharmsPlugin plugin) {
         super(fileName, plugin);
         this.loadProperties();
     }

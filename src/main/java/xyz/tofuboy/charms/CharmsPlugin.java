@@ -3,25 +3,30 @@ package xyz.tofuboy.charms;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.tofuboy.charms.charms.Charm;
 import xyz.tofuboy.charms.charms.CharmManager;
 import xyz.tofuboy.charms.command.CommandHandler;
 import xyz.tofuboy.charms.listeners.BlockPlaceListener;
+import xyz.tofuboy.charms.settings.CharmData;
 import xyz.tofuboy.charms.settings.CharmProperties;
 import xyz.tofuboy.charms.settings.Config;
 import xyz.tofuboy.charms.settings.Messages;
 import xyz.tofuboy.charms.utils.CustomPlayerHeads;
 
-public class Charms extends JavaPlugin {
+public class CharmsPlugin extends JavaPlugin {
+    private static CharmsPlugin instance;
     private Config config;
     private Messages messages;
     private CharmManager charmManager;
     private CustomPlayerHeads customPlayerHeads;
 
+    private CharmData charmData;
+
     @Override
     public void onEnable() {
         initConfigs();
         this.customPlayerHeads = new CustomPlayerHeads();
-        Bukkit.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this),this);
+        Bukkit.getServer().getPluginManager().registerEvents(new BlockPlaceListener(),this);
         registerCommands();
         getLogger().info("onEnable is called!");
     }
@@ -41,6 +46,7 @@ public class Charms extends JavaPlugin {
         this.config = new Config("config.yml", this);
         this.messages = new Messages("messages.yml", this);
         this.charmManager = new CharmManager(new CharmProperties("charms.yml", this), this);
+        this.charmData = new CharmData("data.yml", this);
     }
 
     private void nullConfigs(){
@@ -49,7 +55,7 @@ public class Charms extends JavaPlugin {
         this.charmManager = null;
     }
 
-    private void registerCommands () {
+    private void registerCommands() {
         CommandHandler commandHandler = new CommandHandler(this);
         this.getCommand("charms").setExecutor(commandHandler);
         this.getCommand("charms").setTabCompleter(commandHandler);
@@ -69,6 +75,10 @@ public class Charms extends JavaPlugin {
 
     public CustomPlayerHeads getCustomPlayerHeads() {
         return customPlayerHeads;
+    }
+
+    public CharmData getCharmData() {
+        return charmData;
     }
 
     public enum LogType
@@ -92,8 +102,12 @@ public class Charms extends JavaPlugin {
             case DEBUG:     color = ChatColor.DARK_GREEN; break;
             default:        color = ChatColor.WHITE;      break;
         }
-        Bukkit.getConsoleSender().sendMessage(color + "[Charms] - " + type.name() + " - " + message);
+        Bukkit.getConsoleSender().sendMessage(color + "[CharmsPlugin] - " + type.name() + " - " + message);
         return true;
         }
+    }
+
+    public static CharmsPlugin getInstance() {
+        return instance;
     }
 }

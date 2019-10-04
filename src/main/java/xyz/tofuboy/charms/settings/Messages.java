@@ -1,7 +1,7 @@
 package xyz.tofuboy.charms.settings;
 
 import org.bukkit.ChatColor;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 
 public class Messages extends DataFile {
     public String
@@ -17,12 +17,12 @@ public class Messages extends DataFile {
             ;
 
 
-    public Messages(String fileName, Charms plugin) {
+    public Messages(String fileName, CharmsPlugin plugin) {
         super(fileName, plugin);
         this.loadProperties(plugin);
     }
 
-    public void loadProperties(Charms plugin) {
+    public void loadProperties(CharmsPlugin plugin) {
         try {
             this.PLUGIN_PREFIX = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("PluginsPrefix"));
             this.ERROR = PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("Error"));

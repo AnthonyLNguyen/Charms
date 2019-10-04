@@ -1,11 +1,10 @@
 package xyz.tofuboy.charms.settings;
 
-import org.bukkit.ChatColor;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 
 public class Properties extends DataFile {
 
-    public Properties(String fileName, Charms plugin) {
+    public Properties(String fileName, CharmsPlugin plugin) {
         super(fileName, plugin);
         this.loadProperties();
     }

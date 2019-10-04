@@ -3,7 +3,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 import xyz.tofuboy.charms.command.ICommand;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public final class CommandGive implements ICommand {
         return desc;
     }
 
-    public List<String> tabComplete(Charms plugin, CommandSender sender, String[] args) {
+    public List<String> tabComplete(CharmsPlugin plugin, CommandSender sender, String[] args) {
         List<String> list = new ArrayList<>();
         int argsLength = args.length;
         if (argsLength == 1){
@@ -48,7 +48,7 @@ public final class CommandGive implements ICommand {
         return minArgs;
     }
 
-    public void perform(Charms plugin, CommandSender sender, String[] args) {
+    public void perform(CharmsPlugin plugin, CommandSender sender, String[] args) {
         Player player = Bukkit.getPlayer(args[1]);
         if (player == null) {
             sender.sendMessage(plugin.getMessages().ERROR + args[1] + " is not online or does not exist.");

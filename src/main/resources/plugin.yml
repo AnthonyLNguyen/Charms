@@ -1,7 +1,7 @@
-name: Charms
+name: CharmsPlugin
 version: 1.0
 api-version: 1.13
-main: xyz.tofuboy.charms.Charms
+main: xyz.tofuboy.charms.CharmsPlugin
 commands:
-  charms:
-    description: Charms plugin command
+  charmsPlugin:
+    description: CharmsPlugin plugin command

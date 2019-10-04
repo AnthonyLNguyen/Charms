@@ -1,24 +1,19 @@
 package xyz.tofuboy.charms.charms;
 
-import com.sun.jndi.ldap.EntryChangeResponseControl;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 import xyz.tofuboy.charms.settings.CharmProperties;
-import xyz.tofuboy.charms.utils.CustomPlayerHeads;
 
 import java.util.Map;
-import java.util.Set;
 
 public class CharmManager {
     private CharmProperties prop;
-    private Charms plugin;
+    private CharmsPlugin plugin;
 
-    public CharmManager(CharmProperties charmProperties, Charms plugin) {
+    public CharmManager(CharmProperties charmProperties, CharmsPlugin plugin) {
         this.prop = charmProperties;
         this.plugin = plugin;
     }
@@ -27,8 +22,9 @@ public class CharmManager {
         return prop;
     }
 
-    public void createCharm(String charmName){
-        plugin.console(Charms.LogType.DEBUG,"Creating charm " + charmName);
+    public void createBlockCharm(Charm charm){
+        plugin.console(CharmsPlugin.LogType.DEBUG,"Creating charm " + charm.getIdentifier());
+        plugin.getCharmData().writeLocation(charm.getType(),charm.getBlockLocation());
     }
 
     public String getCharmFromHead(ItemStack head){

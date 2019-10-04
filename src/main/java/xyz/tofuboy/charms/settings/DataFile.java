@@ -2,7 +2,7 @@ package xyz.tofuboy.charms.settings;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,23 +11,23 @@ public abstract class DataFile {
     private File file;
     private FileConfiguration config;
 
-    public DataFile(String fileName, Charms charms) {
-        this.createFile(fileName, charms);
-        this.loadYaml(fileName, charms);
+    public DataFile(String fileName, CharmsPlugin charmsPlugin) {
+        this.createFile(fileName, charmsPlugin);
+        this.loadYaml(fileName, charmsPlugin);
     }
 
-    private void createFile(String fileName, Charms charms) {
+    private void createFile(String fileName, CharmsPlugin charmsPlugin) {
         try {
-            if (!charms.getDataFolder().exists()) {
-                charms.getDataFolder().mkdirs();
+            if (!charmsPlugin.getDataFolder().exists()) {
+                charmsPlugin.getDataFolder().mkdirs();
             }
 
-            this.file = new File(charms.getDataFolder(), fileName);
+            this.file = new File(charmsPlugin.getDataFolder(), fileName);
             if (!this.file.exists()) {
-                charms.getLogger().info(fileName + " not found, creating!");
-                charms.saveResource(fileName, false);
+                charmsPlugin.getLogger().info(fileName + " not found, creating!");
+                charmsPlugin.saveResource(fileName, false);
             } else {
-                charms.getLogger().info(fileName + " found, loading!");
+                charmsPlugin.getLogger().info(fileName + " found, loading!");
             }
         } catch (Exception var4) {
             System.out.println(fileName + " failed to load..");
@@ -36,8 +36,8 @@ public abstract class DataFile {
 
     }
 
-    private void loadYaml(String fileName, Charms charms) {
-        this.config = YamlConfiguration.loadConfiguration(new File(charms.getDataFolder(), fileName));
+    private void loadYaml(String fileName, CharmsPlugin charmsPlugin) {
+        this.config = YamlConfiguration.loadConfiguration(new File(charmsPlugin.getDataFolder(), fileName));
     }
 
     public File getFile() {

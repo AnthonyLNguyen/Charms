@@ -1,20 +1,20 @@
 package xyz.tofuboy.charms.command;
 
 import org.bukkit.command.CommandSender;
-import xyz.tofuboy.charms.Charms;
+import xyz.tofuboy.charms.CharmsPlugin;
 
 import java.util.List;
 
 public interface ICommand {
     String getDescription();
 
-    List<String> tabComplete(Charms charms, CommandSender sender, String[] args);
+    List<String> tabComplete(CharmsPlugin charmsPlugin, CommandSender sender, String[] args);
 
     String getUsage();
 
     int getMinArgs();
 
-    void perform(Charms plugin, CommandSender sender, String[] args);
+    void perform(CharmsPlugin plugin, CommandSender sender, String[] args);
 
     String getLabel();
 
