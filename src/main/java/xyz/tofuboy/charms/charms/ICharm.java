@@ -1,6 +1,7 @@
 package xyz.tofuboy.charms.charms;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public interface ICharm {
@@ -16,5 +17,7 @@ public interface ICharm {
     void doAbility(Location location, int radius);
 
     CharmType getType();
+
+    Player getPlayer();
 
 }

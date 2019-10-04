@@ -24,6 +24,7 @@ public class CharmsPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         initConfigs();
         this.customPlayerHeads = new CustomPlayerHeads();
         Bukkit.getServer().getPluginManager().registerEvents(new BlockPlaceListener(),this);

@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import xyz.tofuboy.charms.CharmsPlugin;
+import xyz.tofuboy.charms.charms.CharmType;
 import xyz.tofuboy.charms.charms.ICharm;
 import xyz.tofuboy.charms.charms.types.Farming;
 import xyz.tofuboy.charms.utils.CustomPlayerHeads;
@@ -13,7 +14,7 @@ import java.util.*;
 public class CharmProperties extends DataFile {
     CharmsPlugin plugin;
 
-    public HashMap<String,Class<? extends ICharm>> charms = new HashMap<>();
+    public HashMap<String,CharmType> charms = new HashMap<>();
     private HashMap<String,ItemStack> headID = new HashMap<>();
     private HashMap<String,String> description = new HashMap<>();
     private HashMap<String,List<Material>> affectedBlocks = new HashMap<>();
@@ -30,7 +31,7 @@ public class CharmProperties extends DataFile {
         String path;
 
 
-        charms.put("farming",Farming.class);
+        charms.put("farming", CharmType.FARMING);
 
 
         for (String key : charms.keySet()) {
@@ -57,7 +58,7 @@ public class CharmProperties extends DataFile {
         }
     }
 
-    public HashMap<String, Class<? extends ICharm>> getAllCharms() {
+    public HashMap<String, CharmType> getAllCharms() {
         return charms;
     }
 

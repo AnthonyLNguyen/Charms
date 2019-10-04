@@ -2,19 +2,23 @@ package xyz.tofuboy.charms.charms;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import xyz.tofuboy.charms.CharmsPlugin;
 
 public abstract class Charm implements ICharm{
-    private ICharm charmType;
+    private CharmType charmType;
     private Location blockLocation;
-    private Material block;
-    private int level;
-    private int cooldown;
-    private String name;
+    private Block block;
+    private Player player;
 
-    protected Charm (){
-
+    protected Charm (Player player, Block block, CharmType charmType){
+        this.player = player;
+        this.block = block;
+        this.charmType = charmType;
+        this.blockLocation = block.getLocation();
     }
 
     public ItemStack head() { return CharmsPlugin.getInstance().getCharmManager().getHead(getIdentifier()); }
@@ -34,4 +38,6 @@ public abstract class Charm implements ICharm{
     public Location getBlockLocation(){
         return blockLocation;
     }
+
+    public Player getPlayer() { return player; }
 }

@@ -20,7 +20,7 @@ public class BlockPlaceListener implements Listener {
         Block placedBlock = event.getBlock();
         if (CharmsPlugin.getInstance().getCharmManager().isCharm(placedBlock)) {
             CharmsPlugin.getInstance().console(CharmsPlugin.LogType.DEBUG, "Player " + event.getPlayer() + "placed a charm at location: " + placedBlock.getLocation());
-            CharmsPlugin.getInstance().getCharmManager().createBlockCharm(CharmsPlugin.getInstance().getInstance().getCharmManager().getCharmFromHead((ItemStack) placedBlock.getDrops().toArray()[0]));
+            CharmsPlugin.getInstance().getCharmManager().createBlockCharm(CharmsPlugin.getInstance().getCharmManager().getCharmFromHead(event.getBlock()),event.getBlock(),event.getPlayer());
         }
     }
 }
