@@ -40,4 +40,8 @@ public abstract class Charm implements ICharm{
     }
 
     public Player getPlayer() { return player; }
+
+    public void onLoad(){
+
+    }
 }

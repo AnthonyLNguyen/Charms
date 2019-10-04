@@ -52,4 +52,8 @@ public class CharmToLoad {
         return this.player;
     }
 
+
+    public boolean isLocationOnBlock(Location location) {
+        return (location == this.location);
+    }
 }

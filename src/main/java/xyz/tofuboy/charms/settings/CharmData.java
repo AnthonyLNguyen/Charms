@@ -185,7 +185,7 @@ public class CharmData extends DataFile{
 
                                 try {
                                     Constructor c = clazz.getDeclaredConstructor(Player.class, Block.class, CharmType.class);
-                                    newCharm = (Charm)c;
+                                    newCharm = (Charm)c.newInstance();
                                 } catch (InstantiationException e1) {
                                     e1.printStackTrace();
                                 } catch (IllegalAccessException e2) {
