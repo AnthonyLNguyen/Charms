@@ -12,12 +12,13 @@ public abstract class Charm implements ICharm{
     private CharmType charmType;
     private Location blockLocation;
     private Block block;
+
+
     private Player player;
 
-    protected Charm (Player player, Block block, CharmType charmType){
+    protected Charm (Player player, Block block){
         this.player = player;
         this.block = block;
-        this.charmType = charmType;
         this.blockLocation = block.getLocation();
     }
 
@@ -40,6 +41,15 @@ public abstract class Charm implements ICharm{
     }
 
     public Player getPlayer() { return player; }
+
+
+    public void setBlock(Block block) {
+        this.block = block;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public void onLoad(){
 

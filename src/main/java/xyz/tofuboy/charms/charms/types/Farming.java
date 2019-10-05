@@ -3,6 +3,7 @@ package xyz.tofuboy.charms.charms.types;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.entity.Player;
 import xyz.tofuboy.charms.CharmsPlugin;
 import xyz.tofuboy.charms.charms.Charm;
 import xyz.tofuboy.charms.charms.CharmType;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class Farming extends Charm {
 
-    Farming (){
-        super();
+    Farming (Player player, Block block){
+        super(player, block);
     }
 
     public String getIdentifier() {

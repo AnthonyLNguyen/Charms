@@ -3,10 +3,9 @@ package xyz.tofuboy.charms;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.tofuboy.charms.charms.Charm;
 import xyz.tofuboy.charms.charms.CharmManager;
 import xyz.tofuboy.charms.command.CommandHandler;
-import xyz.tofuboy.charms.listeners.BlockPlaceListener;
+import xyz.tofuboy.charms.listeners.CharmPlaceListener;
 import xyz.tofuboy.charms.settings.CharmData;
 import xyz.tofuboy.charms.settings.CharmProperties;
 import xyz.tofuboy.charms.settings.Config;
@@ -27,7 +26,7 @@ public class CharmsPlugin extends JavaPlugin {
         instance = this;
         initConfigs();
         this.customPlayerHeads = new CustomPlayerHeads();
-        Bukkit.getServer().getPluginManager().registerEvents(new BlockPlaceListener(),this);
+        Bukkit.getServer().getPluginManager().registerEvents(new CharmPlaceListener(),this);
         registerCommands();
         getLogger().info("onEnable is called!");
     }

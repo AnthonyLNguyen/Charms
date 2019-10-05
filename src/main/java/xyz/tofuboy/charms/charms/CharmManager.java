@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import xyz.tofuboy.charms.CharmsPlugin;
 import xyz.tofuboy.charms.settings.CharmProperties;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,7 +18,7 @@ public class CharmManager {
     private CharmProperties prop;
     private CharmsPlugin plugin;
     private List<CharmPlayer> charmPlayers = new ArrayList();
-    private ConcurrentHashMap<String, ArrayList<CharmType>> activeCharms = new ConcurrentHashMap<String, ArrayList<CharmType>>();
+    private ConcurrentHashMap<CharmType, ArrayList<? extends Charm>> activeCharms = new ConcurrentHashMap();
     private ArrayList<CharmToLoad> charmsToLoad = new ArrayList();;
 
     public CharmManager(CharmProperties charmProperties, CharmsPlugin plugin) {
@@ -30,7 +32,61 @@ public class CharmManager {
 
     public void createBlockCharm(CharmType charmType,Block block, Player player){
         plugin.console(CharmsPlugin.LogType.DEBUG,"Creating charm " + charmType);
+
+
+        CharmPlayer charmPlayer = CharmsPlugin.getInstance().getCharmManager().getCharmPlayer(player);
+
+        Class clazz = charmType.getCharmClass();
+        Charm newCharm = null;
+        try {
+            Constructor c = clazz.getDeclaredConstructor(Player.class, Block.class);
+            newCharm = (Charm)c.newInstance();
+        } catch (InstantiationException e1) {
+            e1.printStackTrace();
+        } catch (IllegalAccessException e2) {
+            e2.printStackTrace();
+        } catch (InvocationTargetException e3) {
+            e3.printStackTrace();
+        } catch (NoSuchMethodException e4) {
+            e4.printStackTrace();
+        }
+        if (newCharm != null) {
+            newCharm.setPlayer(player);
+            newCharm.setBlock(block);
+            CharmsPlugin.getInstance().getCharmData().saveCharmToPlayerFile(player,newCharm);
+            CharmsPlugin.getInstance().getCharmManager().addCharmToActiveCharms(newCharm);
+            charmPlayer.getPlayersCharms().add(newCharm);
+            charmPlayer.setTotalCharms(charmPlayer.getTotalCharms() + 1);
+
+        }
         //plugin.getCharmData().writeLocation(charmType,block.getLocation(),player);
+    }
+
+    public void breakBlockCharm(CharmType charmType,Block block, Player player){
+        plugin.console(CharmsPlugin.LogType.DEBUG,"Breaking charm " + charmType);
+        //plugin.getCharmData().writeLocation(charmType,block.getLocation(),player);
+        Iterator iter = CharmsPlugin.getInstance().getCharmManager().getAllActiveCharms().iterator();
+        while(iter.hasNext()) {
+            Charm charm = (Charm)iter.next();
+            if (charm.getBlockLocation() == block.getLocation()){
+                CharmsPlugin.getInstance().getCharmData().removeCharmFromPlayerFile(player, charm);
+                CharmsPlugin.getInstance().getCharmManager().removeCharmFromActiveCharms(charm);
+                CharmPlayer charmPlayer = CharmsPlugin.getInstance().getCharmManager().getCharmPlayer(player);
+                charmPlayer.setTotalCharms(charmPlayer.getTotalCharms() - 1);
+                ArrayList list = (ArrayList)charmPlayer.getPlayersCharms().clone();
+                Iterator charmIter = list.iterator();
+                while(charmIter.hasNext()) {
+                    Charm playersCharm = (Charm)charmIter.next();
+                    if(playersCharm.equals(charm)) {
+                        charmPlayer.getPlayersCharms().remove(playersCharm);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+
     }
 
 
@@ -100,15 +156,39 @@ public class CharmManager {
 
     public void removeCharmFromActiveCharms(Charm charm) {
             if (charm != null) {
-                ArrayList list = (ArrayList)this.getActiveCharms().get(charm.getIdentifier());
+                ArrayList list = (ArrayList)this.getActiveCharms().get(charm.getType());
                 if (list != null) {
                     list.remove(charm);
-                    this.getActiveCharms().put(charm.getIdentifier(), list);
+                    this.getActiveCharms().put(charm.getType(), list);
                 }
             }
         }
-    public ConcurrentHashMap<String, ArrayList<CharmType>> getActiveCharms() {
+    public ConcurrentHashMap<CharmType, ArrayList<? extends Charm>> getActiveCharms() {
         return this.activeCharms;
+    }
+
+    public ArrayList<Charm> getAllActiveCharms() {
+        ArrayList list = new ArrayList();
+        Iterator iter = this.activeCharms.keySet().iterator();
+
+        while(true) {
+            ArrayList newList;
+            do {
+                if(!iter.hasNext()) {
+                    return list;
+                }
+
+                String var3 = (String)iter.next();
+                newList = (ArrayList)CharmsPlugin.getInstance().getCharmManager().getActiveCharms().get(var3);
+            } while(list == null);
+
+            Iterator charmIter = newList.iterator();
+
+            while(charmIter.hasNext()) {
+                Charm charm = (Charm)charmIter.next();
+                list.add(charm);
+            }
+        }
     }
 
     public ArrayList<CharmToLoad> getCharmsToLoad() {
@@ -116,12 +196,12 @@ public class CharmManager {
     }
 
     public void addCharmToActiveCharms(Charm charm) {
-        ArrayList list = (ArrayList)this.getActiveCharms().get(charm.getIdentifier());
+        ArrayList list = (ArrayList)this.getActiveCharms().get(charm.getType());
         if (list == null) {
             list = new ArrayList();
         }
 
         list.add(charm);
-        this.getActiveCharms().put(charm.getIdentifier(), list);
+        this.getActiveCharms().put(charm.getType(), list);
     }
 }
