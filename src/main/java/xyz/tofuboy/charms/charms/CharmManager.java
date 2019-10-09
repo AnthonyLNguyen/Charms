@@ -39,8 +39,8 @@ public class CharmManager {
         Class clazz = charmType.getCharmClass();
         Charm newCharm = null;
         try {
-            Constructor c = clazz.getDeclaredConstructor(Player.class, Block.class);
-            newCharm = (Charm)c.newInstance();
+            CharmsPlugin.getInstance().console(CharmsPlugin.LogType.DEBUG,clazz.toString());
+            newCharm = (Charm)clazz.getDeclaredConstructor(Player.class, Block.class).newInstance(player,block);
         } catch (InstantiationException e1) {
             e1.printStackTrace();
         } catch (IllegalAccessException e2) {
@@ -51,8 +51,8 @@ public class CharmManager {
             e4.printStackTrace();
         }
         if (newCharm != null) {
-            newCharm.setPlayer(player);
-            newCharm.setBlock(block);
+/*            newCharm.setPlayer(player);
+            newCharm.setBlock(block);*/
             CharmsPlugin.getInstance().getCharmData().saveCharmToPlayerFile(player,newCharm);
             CharmsPlugin.getInstance().getCharmManager().addCharmToActiveCharms(newCharm);
             charmPlayer.getPlayersCharms().add(newCharm);

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Farming extends Charm {
 
-    Farming (Player player, Block block){
+    public Farming (Player player, Block block){
         super(player, block);
     }
 
